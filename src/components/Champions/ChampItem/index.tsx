@@ -18,12 +18,11 @@ const Containter = styled.div`
   }
 `;
 
-const ImageContainer = styled.div<{ image: string }>`
+const ImageContainer = styled.div`
   height: 325px;
   width: 100%;
-  background-image: url(${(props) => props.image});
-  background-size: cover;
   transition: all 0.2s ease;
+  position: relative;
 `;
 
 const ChampItem = ({
@@ -39,9 +38,15 @@ const ChampItem = ({
         if (onClick) onClick(e);
       }}
     >
-      <ImageContainer
-        image={`https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champDetails.id}_0.jpg`}
-      />
+      <ImageContainer>
+        <Image
+          alt="champion-image"
+          style={{ objectPosition: "top", objectFit: "cover" }}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          src={`https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champDetails.id}_0.jpg`}
+        />
+      </ImageContainer>
     </Containter>
   );
 };
