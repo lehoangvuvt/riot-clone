@@ -19,6 +19,18 @@ const nextConfig = {
 
     return config;
   },
+  experimental: {
+    workerThreads: true,
+    optimizeCss: true, // enabling this will enable SSR for Tailwind
+    swcMinify: true,
+    gzipSize: true,
+    optimizeServerReact: true,
+    serverMinification: true,
+    webpackBuildWorker: true,
+    serverActions: true,
+    serverSourceMaps: true,
+  },
+  staticPageGenerationTimeout: 120,
 };
 
 module.exports = nextConfig;
