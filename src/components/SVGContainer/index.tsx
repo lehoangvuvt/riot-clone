@@ -4,14 +4,14 @@ import { useState } from "react";
 import RiotLogo from "/public/assets/svg/riotLogo.svg";
 
 const SVGContainer = ({
-  width = 50,
-  height = 50,
+  width = "50px",
+  height = "50px",
   fillColor = "black",
   onHoverFillColor = "black",
   style,
 }: {
-  width?: number;
-  height?: number;
+  width?: string;
+  height?: string;
   fillColor?: string;
   onHoverFillColor?: string;
   style?: React.CSSProperties;

@@ -277,27 +277,27 @@ const Header = () => {
           onMouseLeave={() => setHoverLogo(false)}
         >
           <SVGContainer
-            width={85}
-            height={80}
+            width={"85px"}
+            height={"80px"}
             style={{
               marginLeft: "20px",
               cursor: "default",
               pointerEvents: "none",
             }}
             key={isHoverLogo + "_"}
-            fillColor={isHoverLogo ? "red" : idleLogoColor}
+            fillColor={isHoverLogo ? "#DF2029" : idleLogoColor}
           />
           {isOpenBigMenu ? (
             <CaretUpOutlined
               style={{
-                color: isHoverLogo ? "red" : "rgba(0,0,0,0.5)",
+                color: isHoverLogo ? "#DF2029" : "rgba(0,0,0,0.5)",
                 fontSize: "12px",
               }}
             />
           ) : (
             <CaretDownOutlined
               style={{
-                color: isHoverLogo ? "red" : "rgba(255,255,255,0.5)",
+                color: isHoverLogo ? "#DF2029" : "rgba(255,255,255,0.5)",
                 fontSize: "12px",
               }}
             />

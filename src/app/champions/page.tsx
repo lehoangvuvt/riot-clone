@@ -9,21 +9,13 @@ import SearchBar from "@/components/SearchBar";
 import { useEffect, useState } from "react";
 import Tabs, { TabItem } from "@/components/Tabs";
 import useAllChamps from "@/react-query/useAllChamps";
+import FlexPaddingCenter from "@/components/FlexPaddingCenter";
 
 const Container = styled.div`
   width: 100%;
   display: flex;
   flex-flow: column wrap;
   align-items: center;
-`;
-
-const ChampionsContainer = styled.div`
-  width: 84%;
-  display: flex;
-  flex-flow: row wrap;
-  gap: 20px;
-  margin: auto;
-  margin-bottom: 40px;
 `;
 
 const Header = styled.div`
@@ -239,11 +231,19 @@ const Champions = () => {
 
           <Right></Right>
         </Header>
-        <ChampionsContainer>
+        <FlexPaddingCenter
+          gap={12}
+          style={{
+            width: "84%",
+            paddingBottom: "100px",
+            margin: "auto auto",
+          }}
+        >
           {filteredChamps &&
             filteredChamps.length > 0 &&
             filteredChamps.map((champ) => (
               <ChampItem
+                style={{ width: "19%" }}
                 onClick={(e) => {
                   router.push(`champion-details/${champ.id}`);
                 }}
@@ -251,7 +251,7 @@ const Champions = () => {
                 key={champ.id}
               />
             ))}
-        </ChampionsContainer>
+        </FlexPaddingCenter>
       </Container>
     </BaseContainer>
   );

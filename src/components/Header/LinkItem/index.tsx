@@ -18,19 +18,22 @@ const Container = styled.div<{ $isContainDropDown: boolean }>`
   letter-spacing: 1px;
   cursor: pointer;
   position: relative;
+
   .link-title {
     padding: 7px 15px;
     border-radius: 5px;
+    transition: opacity 0.2s ease;
   }
   &:hover {
     .link-title {
       background: rgba(255, 255, 255, 0.15);
     }
     &:after {
-      display: inline;
+      opacity: 1;
     }
   }
   &:after {
+    transition: opacity 0.2s ease;
     content: "";
     position: absolute;
     bottom: 10px;
@@ -39,7 +42,7 @@ const Container = styled.div<{ $isContainDropDown: boolean }>`
     height: 4px;
     background: #00aff0;
     border-radius: 5px;
-    display: none;
+    opacity: 0;
   }
 `;
 
@@ -55,6 +58,17 @@ const DropdownItemsContainer = styled.div`
   padding: 20px 15px;
   box-sizing: border-box;
   gap: 10px;
+  transform: scaleY(0);
+  transform-origin: top;
+  animation: dropdownItemsContainerAnim 0.1s ease 0.1s forwards;
+  @keyframes dropdownItemsContainerAnim {
+    from {
+      transform: scaleY(0);
+    }
+    to {
+      transform: scaleY(1);
+    }
+  }
 `;
 
 const DropdownItem = styled.div`

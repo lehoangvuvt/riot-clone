@@ -238,11 +238,12 @@ const CarouselContent = styled.div`
   display: flex;
   flex-flow: column wrap;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   margin-left: 1%;
 
   img {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+    margin-top: 30px;
   }
 
   span:nth-child(2) {
@@ -285,53 +286,72 @@ const InfiniteCarousel = ({
   const [lastIndex, setLastIndex] = useState(-1);
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [isScrolling, setScrolling] = useState(false);
+  const [centerIndex, setCenterIndex] = useState(-1);
 
   useEffect(() => {
     if (data && data.length > 0) {
-      setSlideData([...data, ...data, ...data, ...data]);
+      setSlideData([
+        ...data,
+        ...data,
+        ...data,
+        ...data,
+        ...data,
+        ...data,
+        ...data,
+      ]);
     }
   }, [data]);
 
   useEffect(() => {
     if (slideData && slideData.length > 0) {
-      setCurrentIndex(Math.ceil(slideData.length / 2) - 1);
-      setLastIndex(Math.ceil(slideData.length / 2) - 1);
+      setCenterIndex(data.length * 3 + (Math.ceil(data.length / 2) - 1));
+      setCurrentIndex(data.length * 3 + (Math.ceil(data.length / 2) - 1));
+      setLastIndex(data.length * 3 + (Math.ceil(data.length / 2) - 1));
     }
   }, [slideData]);
 
   useEffect(() => {
-    if (currentIndex !== -1) {
-      setScrolling(true);
-      if (
-        currentIndex > Math.ceil(data.length / 2) + 1 &&
-        currentIndex < slideData.length - 1
-      ) {
-        const sliderElem = document.getElementById("infinite-carousel-slider");
-        if (sliderElem) {
-          const widthPerItem = (sliderElem.clientWidth / 100) * 45 + 20;
-          if (currentIndex !== Math.ceil(slideData.length / 2) - 1) {
-            sliderElem.scrollTo({
-              left: (currentIndex - 2) * widthPerItem,
-              behavior: "smooth",
-            });
-          } else {
-            if (Math.abs(lastIndex - currentIndex) == 1) {
+    if (currentIndex !== -1 && centerIndex !== -1) {
+      const sliderElem = document.getElementById("infinite-carousel-slider");
+      if (sliderElem) {
+        setScrolling(true);
+        const widthPerItem = (sliderElem.clientWidth / 100) * 45 + 20;
+        if (
+          currentIndex > data.length - 1 &&
+          currentIndex < slideData.length - data.length - 1
+        ) {
+          if (sliderElem) {
+            if (currentIndex !== centerIndex) {
               sliderElem.scrollTo({
-                left: (currentIndex - 2) * widthPerItem,
+                left: (currentIndex - 1) * widthPerItem,
                 behavior: "smooth",
               });
             } else {
-              sliderElem.scrollTo({
-                left: (currentIndex - 2) * widthPerItem,
-              });
+              if (Math.abs(lastIndex - currentIndex) == 1) {
+                sliderElem.scrollTo({
+                  left: (currentIndex - 1) * widthPerItem,
+                  behavior: "smooth",
+                });
+              } else {
+                sliderElem.scrollTo({
+                  left: (currentIndex - 1) * widthPerItem,
+                });
+              }
             }
           }
+        } else {
+          if (slideData[currentIndex].url === slideData[centerIndex].url) {
+            setCurrentIndex(centerIndex);
+          } else {
+            sliderElem.scrollTo({
+              left: (currentIndex - 1) * widthPerItem,
+              behavior: "smooth",
+            });
+          }
         }
-      } else {
-        setCurrentIndex(Math.ceil(slideData.length / 2) - 1);
       }
     }
-  }, [currentIndex]);
+  }, [currentIndex, centerIndex]);
 
   const handleScrollEnd = () => {
     setScrolling(false);
@@ -353,19 +373,15 @@ const InfiniteCarousel = ({
       <CarouselContainer id="infinite-carousel-slider">
         {slideData.map((item, i) => (
           <CarouselItem
-            className={i + 1 === currentIndex && !isScrolling ? "selected" : ""}
+            className={i === currentIndex && !isScrolling ? "selected" : ""}
             key={item.url + "_" + i}
           >
             <CarouseImage
-              className={
-                i + 1 === currentIndex && !isScrolling ? "selected" : ""
-              }
+              className={i === currentIndex && !isScrolling ? "selected" : ""}
               $bgImg={item.url}
             />
             <CarouselInfo
-              className={
-                i + 1 === currentIndex && !isScrolling ? "selected" : ""
-              }
+              className={i === currentIndex && !isScrolling ? "selected" : ""}
             >
               <CarouselContent>
                 {item.type === "story-preview" ? (

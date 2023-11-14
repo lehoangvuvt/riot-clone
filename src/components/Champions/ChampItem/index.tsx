@@ -1,10 +1,9 @@
-import { ChampItem, GetChampDetailsResponse } from "@/types/api.types";
+import { ChampItem } from "@/types/api.types";
 import Image from "next/image";
 import { MouseEventHandler } from "react";
 import styled from "styled-components";
 
 const Containter = styled.div`
-  width: 18.7%;
   position: relative;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -28,12 +27,15 @@ const ImageContainer = styled.div`
 const ChampItem = ({
   champDetails,
   onClick,
+  style,
 }: {
   champDetails: ChampItem;
   onClick: MouseEventHandler<HTMLDivElement> | undefined;
+  style?: React.CSSProperties;
 }) => {
   return (
     <Containter
+      style={style}
       onClick={(e) => {
         if (onClick) onClick(e);
       }}
@@ -43,7 +45,6 @@ const ChampItem = ({
           alt="champion-image"
           style={{ objectPosition: "top", objectFit: "cover" }}
           fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           src={`https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champDetails.id}_0.jpg`}
         />
       </ImageContainer>
